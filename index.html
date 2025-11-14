@@ -3,136 +3,141 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Peoplecoin — Le token du peuple</title>
+  <title>Peoplecoin — Le jeton de l'action écologique</title>
   <link rel="icon" href="https://raw.githubusercontent.com/Gigifa667/PeopleCoin/main/BCO.a8baecee-add4-44df-93a8-2fee0c8169be.png" type="image/png">
+  <!-- Chargement de Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    /* Utilisation de la police Inter par défaut et configuration esthétique */
     body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 2rem;
-      background-color: #f9f9f9;
-      color: #333;
+      font-family: 'Inter', sans-serif;
     }
-    h1, h2, h3 {
-      color: #1a1a1a;
+    .logo-pulse {
+        animation: pulse-grow 2s infinite;
     }
-    h1 {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      font-size: 2rem;
+    @keyframes pulse-grow {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.05); opacity: 0.95; }
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1rem 0;
-    }
-    table, th, td {
-      border: 1px solid #ccc;
-    }
-    th, td {
-      padding: 0.75rem;
-      text-align: left;
-    }
-    .logo {
-      height: 40px;
-      border-radius: 8px;
-      animation: fadeIn 1.2s ease-in-out;
-    }
-    .section {
-      margin-bottom: 2rem;
-    }
-    .buy-button {
-      display: inline-block;
-      background: linear-gradient(90deg, #00c896, #00b4d8);
-      color: white;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background 0.3s ease;
-      margin: 1rem auto;
-      text-align: center;
-    }
-    .buy-button:hover {
-      background: linear-gradient(90deg, #00b4d8, #00c896);
-    }
-    .center {
-      text-align: center;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
+    /* Style pour le bloc d'adresse */
+    .address-box {
+        overflow-wrap: break-word; /* Assure que l'adresse ne déborde pas sur mobile */
     }
   </style>
+  <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    'pct-green': '#00c896',
+                    'pct-blue': '#00b4d8',
+                    'solana': '#9945FF',
+                },
+            }
+        }
+    }
+  </script>
 </head>
-<body>
+<body class="bg-gray-50 min-h-screen p-4 sm:p-8">
 
-  <h1>
-    <img class="logo" src="https://raw.githubusercontent.com/Gigifa667/PeopleCoin/main/BCO.a8baecee-add4-44df-93a8-2fee0c8169be.png" alt="Logo Peoplecoin" />
-    Peoplecoin — Le token du peuple
-  </h1>
+  <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl p-6 sm:p-10">
 
-  <div class="center">
-    <a class="buy-button" href="https://jup.ag/swap/SOL-PCT" target="_blank">Acheter sur Jupiter</a>
-  </div>
+    <!-- Header et Titre Principal -->
+    <header class="text-center mb-10">
+      <h1 class="flex items-center justify-center gap-3 text-4xl font-extrabold text-gray-900 leading-tight mb-2">
+        <img class="logo-pulse h-12 w-12 rounded-lg" 
+             src="https://raw.githubusercontent.com/Gigifa667/PeopleCoin/main/BCO.a8baecee-add4-44df-93a8-2fee0c8169be.png" 
+             alt="Logo Peoplecoin" />
+        Peoplecoin (PCT)
+      </h1>
+      <p class="text-xl font-medium text-pct-green">
+        Le jeton qui récompense l'action écologique.
+      </p>
+    </header>
 
-  <div class="section">
-    <h2>🌟 Présentation</h2>
-    <p><strong>Peoplecoin (PCT)</strong> est un jeton SPL déployé sur la blockchain Solana, conçu pour incarner une nouvelle vision de la finance décentralisée : accessible, transparente et communautaire. Né d’une volonté de redonner le pouvoir aux utilisateurs, Peoplecoin est un projet porté par ses contributeurs, pour ses contributeurs.</p>
-    <blockquote><em>« Un token pour le peuple, créé par le peuple. »</em></blockquote>
-  </div>
+    <!-- Bouton d'Achat -->
+    <div class="text-center mb-8">
+      <a class="inline-block px-8 py-3 text-lg font-bold text-white rounded-full shadow-lg transition duration-300 transform hover:scale-105 
+                bg-gradient-to-r from-pct-green to-pct-blue hover:from-pct-blue hover:to-pct-green" 
+         href="https://jup.ag/swap/SOL-PCT" target="_blank">
+        Acheter PCT sur Jupiter
+      </a>
+    </div>
 
-  <div class="section">
-    <h2>🔍 Informations techniques</h2>
-    <table>
-      <tr><th>Nom</th><td>Peoplecoin</td></tr>
-      <tr><th>Symbole</th><td>PCT</td></tr>
-      <tr><th>Réseau</th><td>Solana</td></tr>
-      <tr><th>Adresse de mint</th><td><code>5bAkoTnsvncze65z3QxHbLbX8fvU3YMCwmNDRaYau4BN</code></td></tr>
-      <tr><th>Royalties</th><td>5 %</td></tr>
-      <tr><th>Créateur</th><td><code>5bAkoTnsvncze65z3QxHbLbX8fvU3YMCwmNDRaYau4BN</code></td></tr>
-      <tr><th>Image</th>
-        <td>
-          <img class="logo" src="https://raw.githubusercontent.com/Gigifa667/PeopleCoin/main/BCO.a8baecee-add4-44df-93a8-2fee0c8169be.png" alt="Logo Peoplecoin" />
-        </td>
-      </tr>
-      <tr><th>Hébergement des métadonnées</th><td>IPFS via Lighthouse</td></tr>
-    </table>
-  </div>
+    <!-- Section Présentation et Mission (Mise à jour) -->
+    <div id="presentation" class="mb-12 p-6 bg-green-50 rounded-xl shadow-inner">
+      <h2 class="text-2xl font-bold mb-4 text-pct-green border-b pb-2 border-pct-green/50">
+        🌟 Notre Mission : Proof-of-Cleanup
+      </h2>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        **Peoplecoin (PCT)** est plus qu'un simple jeton SPL sur Solana ; c'est un mouvement global qui lie la finance décentralisée à la responsabilité environnementale. Notre mission est de récompenser concrètement et immédiatement les citoyens qui contribuent activement à l'amélioration de notre planète.
+      </p>
+      <blockquote class="italic text-lg text-gray-600 border-l-4 border-pct-blue pl-4 py-2 bg-white/50 rounded-r-md">
+        « Gagnez du PCT pour chaque déchet ramassé. Transformez l'effort écologique en valeur numérique. »
+      </blockquote>
+    </div>
 
-  <div class="section">
-    <h2>🎯 Objectifs du projet</h2>
-    <ul>
-      <li><strong>Démocratisation :</strong> permettre à chacun de participer à l’économie numérique sans barrière technique ni capital initial.</li>
-      <li><strong>Transparence :</strong> toutes les métadonnées sont hébergées sur IPFS et visibles publiquement.</li>
-      <li><strong>Utilité réelle :</strong> accès à des services communautaires, votes décentralisés, récompenses, contenus exclusifs.</li>
-    </ul>
-  </div>
+    <!-- Nouvelle Section: Comment Gagner des PCT -->
+    <div id="gagner-pct" class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 text-gray-900 border-b pb-2 border-gray-200">
+        💰 Comment Gagner des Peoplecoin (PCT) ?
+      </h2>
+      <p class="text-gray-600 mb-6">
+        Notre système **Proof-of-Cleanup** est simple et transparent. Il suffit de prouver votre action via la communauté :
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Étape 1 -->
+        <div class="bg-white p-5 rounded-lg shadow-md border-t-4 border-red-500">
+          <p class="text-3xl font-extrabold text-red-500 mb-2">1.</p>
+          <h3 class="font-semibold text-lg mb-2">Photo AVANT</h3>
+          <p class="text-sm text-gray-600">Prenez une photo géolocalisée de la zone polluée que vous allez nettoyer.</p>
+        </div>
+        <!-- Étape 2 -->
+        <div class="bg-white p-5 rounded-lg shadow-md border-t-4 border-yellow-500">
+          <p class="text-3xl font-extrabold text-yellow-500 mb-2">2.</p>
+          <h3 class="font-semibold text-lg mb-2">L'Action</h3>
+          <p class="text-sm text-gray-600">Ramassez les déchets et mettez-les dans des sacs poubelles appropriés.</p>
+        </div>
+        <!-- Étape 3 -->
+        <div class="bg-white p-5 rounded-lg shadow-md border-t-4 border-pct-green">
+          <p class="text-3xl font-extrabold text-pct-green mb-2">3.</p>
+          <h3 class="font-semibold text-lg mb-2">Photo APRÈS & Récompense</h3>
+          <p class="text-sm text-gray-600">Prenez une photo de la zone propre et des sacs. Soumettez le tout à la communauté pour recevoir vos PCT.</p>
+        </div>
+      </div>
+    </div>
 
-  <div class="section">
-    <h2>🛠️ Roadmap</h2>
-    <table>
-      <tr><th>Phase</th><th>Objectifs clés</th></tr>
-      <tr><td>Q4 2025</td><td>Déploiement du token SPL, enrichissement IPFS, visibilité sur Phantom & Solscan</td></tr>
-      <tr><td>Q1 2026</td><td>Lancement du site officiel, création du Discord communautaire</td></tr>
-      <tr><td>Q2 2026</td><td>Airdrop aux premiers contributeurs, intégration dans des dApps partenaires</td></tr>
-      <tr><td>Q3 2026</td><td>Développement de cas d’usage (vote, accès premium, badges NFT)</td></tr>
-    </table>
-  </div>
-
-  <div class="section">
-    <h2>🤝 Rejoindre l’aventure</h2>
-    <p>Peoplecoin est ouvert à tous. Que vous soyez développeur, designer, investisseur ou simplement curieux, vous pouvez contribuer à la croissance du projet.</p>
-    <ul>
-      <li>💬 Rejoignez notre communauté Discord (à venir)</li>
-      <li>🧠 Proposez vos idées et cas d’usage</li>
-      <li>📢 Partagez le projet sur vos réseaux</li>
-    </ul>
-  </div>
-
-</body>
-</html>
+    <!-- Section Informations Techniques -->
+    <div id="tech-info" class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 text-gray-900 border-b pb-2 border-gray-200">
+        🔍 Informations Techniques
+      </h2>
+      <div class="bg-gray-100 p-4 rounded-lg">
+        <table class="w-full text-left text-sm table-auto">
+          <tbody class="divide-y divide-gray-200">
+            <tr class="hover:bg-gray-200">
+              <th class="py-2 px-3 font-semibold w-1/4">Nom</th>
+              <td class="py-2 px-3">Peoplecoin</td>
+            </tr>
+            <tr class="hover:bg-gray-200">
+              <th class="py-2 px-3 font-semibold">Symbole</th>
+              <td class="py-2 px-3">PCT</td>
+            </tr>
+            <tr class="hover:bg-gray-200">
+              <th class="py-2 px-3 font-semibold">Réseau</th>
+              <td class="py-2 px-3">Solana (SPL Token)</td>
+            </tr>
+            <tr class="hover:bg-gray-200">
+              <th class="py-2 px-3 font-semibold">Adresse du Mint (Contrat)</th>
+              <td class="py-2 px-3 font-mono address-box text-solana">
+                <code>5bAkoTnsvncze65z3QxHbLbX8fvU3YMCwmNDRaYau4BN</code>
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-200">
+              <th class="py-2 px-3 font-semibold">Royalties</th>
+              <td class="py-2 px-3">5 %</td>
+            </tr>
+            <!-- Ligne de l'autorité de Mint supprimée comme demandé -->
+            <!-- <tr>
+              <th class="py-2 px-3 font-semibold">Créateur / Mint Authority</th>
