@@ -1,203 +1,651 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PeopleCoin.com — Le jeton de l'action écologique</title>
-  <link rel="icon" href="https://raw.githubusercontent.com/Gigifa667/PeopleCoin/main/BCO.a8baecee-add4-44df-93a8-2fee0c8169be.png" type="image/png">
-  <!-- Chargement de Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Utilisation de la police Inter par défaut et configuration esthétique */
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    .logo-pulse {
-        animation: pulse-grow 2s infinite;
-    }
-    @keyframes pulse-grow {
-        0%, 100% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.05); opacity: 0.95; }
-    }
-    /* Style pour le bloc d'adresse */
-    .address-box {
-        overflow-wrap: break-word; /* Assure que l'adresse ne déborde pas sur mobile */
-    }
-  </style>
-  <script>
-    tailwind.config = {
-        theme: {
-            extend: {
-                colors: {
-                    'pct-green': '#00c896',
-                    'pct-blue': '#00b4d8',
-                    'solana': '#9945FF',
-                },
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>PeopleCoin.com — Le jeton de l'action écologique</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/Gigifa667/PeopleCoin/main/BCO.a8baecee-add4-44df-93a8-2fee0c8169be.png" type="image/png">
+    <!-- Police Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Chargement de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Icônes Lucide pour l'UX -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Configuration esthétique */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .logo-pulse {
+            animation: pulse-grow 2s infinite;
+        }
+        @keyframes pulse-grow {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.95; }
+        }
+        /* Assure que l'adresse ne déborde pas */
+        .address-box {
+            word-break: break-all;
+            user-select: all;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pct-green': '#00c896',
+                        'pct-blue': '#00b4d8',
+                        'solana': '#9945FF',
+                    },
+                }
             }
         }
-    }
-  </script>
+    </script>
 </head>
 <body class="bg-gray-50 min-h-screen p-4 sm:p-8">
 
-  <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl p-6 sm:p-10">
+    <div class="max-w-6xl mx-auto bg-white shadow-2xl rounded-xl p-6 sm:p-10">
 
-    <!-- Header et Titre Principal -->
-    <header class="text-center mb-10">
-      <h1 class="flex items-center justify-center gap-3 text-4xl font-extrabold text-gray-900 leading-tight mb-2">
-        <img class="logo-pulse h-12 w-12 rounded-lg" 
-             src="https://raw.githubusercontent.com/Gigifa667/PeopleCoin/main/BCO.a8baecee-add4-44df-93a8-2fee0c8169be.png" 
-             alt="Logo Peoplecoin" />
-        Peoplecoin (PCT)
-      </h1>
-      <p class="text-xl font-medium text-pct-green">
-        Le jeton qui récompense l'action écologique.
-      </p>
-    </header>
+        <!-- Header et Titre Principal -->
+        <header class="text-center mb-8">
+            <h1 class="flex items-center justify-center gap-3 text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight mb-2">
+                <img class="logo-pulse h-10 w-10 sm:h-12 sm:w-12 rounded-lg" 
+                     src="https://raw.githubusercontent.com/Gigifa667/PeopleCoin/main/BCO.a8baecee-add4-44df-93a8-2fee0c8169be.png" 
+                     alt="Logo Peoplecoin" />
+                Peoplecoin (PCT)
+            </h1>
+            <p class="text-lg sm:text-xl font-medium text-pct-green">
+                Le jeton qui récompense l'action écologique.
+            </p>
+        </header>
+        
+        <!-- Navigation/Onglets -->
+        <nav class="mb-8 border-b border-gray-200">
+            <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
+                <button onclick="showView('home')" id="tab-home"
+                    class="tab-button px-6 py-2 rounded-full font-bold transition-all duration-200 text-white bg-pct-blue hover:bg-pct-green shadow-lg">
+                    Accueil & Infos
+                </button>
+                <button onclick="showView('events')" id="tab-events"
+                    class="tab-button px-6 py-2 rounded-full font-bold transition-all duration-200 text-gray-700 bg-gray-100 hover:bg-gray-200">
+                    Événements PCT
+                </button>
+            </div>
+        </nav>
 
-    <!-- Bouton d'Action -->
-    <div class="text-center mb-8 bg-solana/10 p-4 rounded-xl shadow-inner border border-solana/20">
-      <!-- Le texte du bouton est maintenant "ACHAT/VENTE" -->
-      <a class="inline-block px-10 py-4 text-xl font-extrabold text-white rounded-full shadow-2xl transition duration-300 transform hover:scale-105 
-                bg-gradient-to-r from-pct-green to-pct-blue hover:from-pct-blue hover:to-pct-green" 
-         href="https://jup.ag/swap/SOL-PCT" target="_blank">
-        ACHAT/VENTE
-      </a>
+        <!-- Vue d'Accueil (Contenu Principal) -->
+        <section id="view-home" class="view-content space-y-8">
+            <!-- Bouton d'Action -->
+            <div class="text-center bg-solana/10 p-4 rounded-xl shadow-inner border border-solana/20">
+                <a class="inline-flex items-center px-8 sm:px-10 py-3 sm:py-4 text-lg sm:text-xl font-extrabold text-white rounded-full shadow-2xl transition duration-300 transform hover:scale-105 
+                          bg-gradient-to-r from-pct-green to-pct-blue hover:from-pct-blue hover:to-pct-green" 
+                    href="https://jup.ag/swap/SOL-PCT" target="_blank">
+                    ACHAT/VENTE
+                    <i data-lucide="external-link" class="w-5 h-5 ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Section Présentation et Mission -->
+            <div id="presentation" class="p-6 bg-green-50 rounded-xl shadow-inner">
+                <h2 class="text-2xl font-bold mb-4 text-pct-green border-b pb-2 border-pct-green/50 flex items-center">
+                    <i data-lucide="star" class="w-6 h-6 mr-2"></i> Notre Mission : Proof-of-Cleanup
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Bienvenue sur **PeopleCoin.com**, le site officiel de **Peoplecoin (PCT)**. Ce jeton SPL sur Solana est le moteur d'un mouvement global qui lie la finance décentralisée à la responsabilité environnementale. Notre mission est de récompenser concrètement et immédiatement les citoyens qui contribuent activement à l'amélioration de notre planète.
+                </p>
+                <blockquote class="italic text-base sm:text-lg text-gray-600 border-l-4 border-pct-blue pl-4 py-2 bg-white/50 rounded-r-md">
+                    « Gagnez du PCT pour chaque déchet ramassé. Transformez l'effort écologique en valeur numérique. »
+                </blockquote>
+            </div>
+
+            <!-- Comment Gagner des PCT -->
+            <div id="gagner-pct">
+                <h2 class="text-2xl font-bold mb-4 text-gray-900 border-b pb-2 border-gray-200 flex items-center">
+                    <i data-lucide="wallet" class="w-6 h-6 mr-2"></i> Comment Gagner des Peoplecoin (PCT) ?
+                </h2>
+                <p class="text-gray-600 mb-6">
+                    Notre système **Proof-of-Cleanup** est simple et transparent. Il suffit de prouver votre action via la communauté :
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Étape 1 -->
+                    <div class="bg-white p-5 rounded-lg shadow-md border-t-4 border-red-500">
+                        <p class="text-3xl font-extrabold text-red-500 mb-2">1.</p>
+                        <h3 class="font-semibold text-lg mb-2">Photo AVANT</h3>
+                        <p class="text-sm text-gray-600">Prenez une photo géolocalisée de la zone polluée que vous allez nettoyer.</p>
+                    </div>
+                    <!-- Étape 2 -->
+                    <div class="bg-white p-5 rounded-lg shadow-md border-t-4 border-yellow-500">
+                        <p class="text-3xl font-extrabold text-yellow-500 mb-2">2.</p>
+                        <h3 class="font-semibold text-lg mb-2">L'Action</h3>
+                        <p class="text-sm text-gray-600">Ramassez les déchets et mettez-les dans des sacs poubelles appropriés.</p>
+                    </div>
+                    <!-- Étape 3 -->
+                    <div class="bg-white p-5 rounded-lg shadow-md border-t-4 border-pct-green">
+                        <p class="text-3xl font-extrabold text-pct-green mb-2">3.</p>
+                        <h3 class="font-semibold text-lg mb-2">Photo APRÈS & Récompense</h3>
+                        <p class="text-sm text-gray-600">Prenez une photo de la zone propre et des sacs. Soumettez le tout à la communauté pour recevoir vos PCT.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informations Techniques -->
+            <div id="tech-info">
+                <h2 class="text-2xl font-bold mb-4 text-gray-900 border-b pb-2 border-gray-200 flex items-center">
+                    <i data-lucide="search" class="w-6 h-6 mr-2"></i> Informations Techniques
+                </h2>
+                <div class="bg-gray-100 p-4 rounded-lg">
+                    <table class="w-full text-left text-sm table-auto">
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-200">
+                                <th class="py-2 px-3 font-semibold w-1/4">Nom</th>
+                                <td class="py-2 px-3">Peoplecoin</td>
+                            </tr>
+                            <tr class="hover:bg-gray-200">
+                                <th class="py-2 px-3 font-semibold">Symbole</th>
+                                <td class="py-2 px-3">PCT</td>
+                            </tr>
+                            <tr class="hover:bg-gray-200">
+                                <th class="py-2 px-3 font-semibold">Réseau</th>
+                                <td class="py-2 px-3">Solana (SPL Token)</td>
+                            </tr>
+                            <tr class="hover:bg-gray-200">
+                                <th class="py-2 px-3 font-semibold">Adresse du Mint (Contrat)</th>
+                                <td class="py-2 px-3 font-mono address-box text-solana text-xs sm:text-sm">
+                                    <code>5bAkoTnsvncze65z3QxHbLbX8fvU3YMCwmNDRaYau4BN</code>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-200">
+                                <th class="py-2 px-3 font-semibold">Royalties</th>
+                                <td class="py-2 px-3">5 %</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section Roadmap -->
+            <div id="roadmap">
+                <h2 class="text-2xl font-bold mb-4 text-gray-900 border-b pb-2 border-gray-200 flex items-center">
+                    <i data-lucide="wrench" class="w-6 h-6 mr-2"></i> Feuille de Route (Roadmap)
+                </h2>
+                <div class="space-y-4">
+                    <!-- Q4 2025 -->
+                    <div class="p-4 bg-gray-100 rounded-lg border-l-4 border-pct-blue">
+                        <span class="font-semibold text-sm text-gray-500">Q4 2025</span>
+                        <p class="font-medium">Déploiement du token SPL, enrichissement IPFS, visibilité sur Phantom & Solscan.</p>
+                    </div>
+                    <!-- Q1 2026 -->
+                    <div class="p-4 bg-gray-100 rounded-lg border-l-4 border-pct-green">
+                        <span class="font-semibold text-sm text-gray-500">Q1 2026</span>
+                        <p class="font-medium">Lancement du site officiel et de la **Communauté Proof-of-Cleanup** (Discord/Telegram).</p>
+                    </div>
+                    <!-- Q2 2026 -->
+                    <div class="p-4 bg-gray-100 rounded-lg border-l-4 border-pct-blue">
+                        <p class="font-medium">Implémentation du système de **validation PCT** par les modérateurs communautaires et premier Airdrop de récompense.</p>
+                    </div>
+                    <!-- Q3 2026 -->
+                    <div class="p-4 bg-gray-100 rounded-lg border-l-4 border-pct-green">
+                        <span class="font-semibold text-sm text-gray-500">Q3 2026</span>
+                        <p class="font-medium">Développement de l'application mobile dédiée (ou Bot) pour faciliter la soumission de preuves et la géolocalisation.</p>
+                    </div>
+                    <!-- Q4 2026 - Nouveau point CEX -->
+                    <div class="p-4 bg-gray-100 rounded-lg border-l-4 border-solana">
+                        <span class="font-semibold text-sm text-gray-500">Q4 2026</span>
+                        <p class="font-medium">Objectif : Premier listing sur une plateforme d'échange centralisée (CEX) pour augmenter l'accessibilité globale du PCT.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Rejoindre -->
+            <div id="rejoindre" class="p-6 bg-blue-50 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 text-pct-blue border-b pb-2 border-pct-blue/50 flex items-center">
+                    <i data-lucide="handshake" class="w-6 h-6 mr-2"></i> Rejoindre le Mouvement Peoplecoin
+                </h2>
+                <p class="text-gray-700 mb-4">
+                    Votre participation est essentielle. Chaque membre contribue à la fois à l'écologie et à la croissance du projet.
+                </p>
+                <ul class="space-y-2 list-disc list-inside text-gray-600">
+                    <li class="flex items-center"><span class="text-pct-green text-xl mr-2">🌱</span><span class="font-semibold">Agissez :</span> Commencez à planifier votre premier nettoyage pour gagner des PCT.</li>
+                    <li class="flex items-center"><span class="text-pct-green text-xl mr-2">💬</span><span class="font-semibold">Rejoignez :</span> Rendez-vous sur notre Discord/Telegram (Lien à venir) pour l'intégration Proof-of-Cleanup.</li>
+                    <li class="flex items-center"><span class="text-pct-green text-xl mr-2">📢</span><span class="font-semibold">Partagez :</span> Faites connaître notre mission sur les réseaux sociaux.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Vue des Événements (Interactive) -->
+        <section id="view-events" class="view-content space-y-10 hidden">
+            <h2 class="text-3xl font-bold text-center text-solana mb-6 flex items-center justify-center">
+                <i data-lucide="calendar-check" class="w-8 h-8 mr-3"></i> Planifier et Participer aux Événements
+            </h2>
+
+            <!-- L'état d'authentification est maintenant géré plus clairement -->
+            <div id="auth-status-container" class="text-center p-3 rounded-lg bg-gray-100 border border-gray-300">
+                <p id="auth-status" class="text-gray-500 font-medium text-sm">Chargement de l'authentification...</p>
+            </div>
+
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- COLONNE 1 & 2: Créer un Événement (2/3 de la largeur sur grand écran) -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="p-6 bg-pct-blue/10 rounded-xl shadow-lg border border-pct-blue/30">
+                        <h3 class="text-xl font-bold mb-4 text-pct-blue flex items-center">
+                            <i data-lucide="plus-square" class="w-5 h-5 mr-2"></i> Créer un nouvel Événement de Nettoyage
+                        </h3>
+                        <form id="event-creation-form" onsubmit="saveEvent(event)" class="space-y-4">
+                            <div>
+                                <label for="event-name" class="block text-sm font-medium text-gray-700">Nom / Titre de l'événement</label>
+                                <input type="text" id="event-name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:border-pct-green focus:ring-pct-green" placeholder="Ex: Nettoyage de la plage de l'Estacade">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="event-date" class="block text-sm font-medium text-gray-700">Jour</label>
+                                    <input type="date" id="event-date" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:border-pct-green focus:ring-pct-green">
+                                </div>
+                                <div>
+                                    <label for="event-time" class="block text-sm font-medium text-gray-700">Heure (Locale)</label>
+                                    <input type="time" id="event-time" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:border-pct-green focus:ring-pct-green">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="event-location" class="block text-sm font-medium text-gray-700">Lieu de l'événement (Adresse / Point de rencontre)</label>
+                                <input type="text" id="event-location" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:border-pct-green focus:ring-pct-green" placeholder="Ex: Devant le parc central, 12 rue de la Paix">
+                            </div>
+                            <div>
+                                <label for="event-description" class="block text-sm font-medium text-gray-700">Description (Optionnelle)</label>
+                                <textarea id="event-description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:border-pct-green focus:ring-pct-green" placeholder="Détails sur l'équipement nécessaire ou les objectifs."></textarea>
+                            </div>
+                            <button type="submit" id="create-event-btn" class="w-full inline-flex justify-center items-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-pct-green hover:bg-pct-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pct-green transition duration-150 ease-in-out">
+                                <i data-lucide="send" class="w-5 h-5 mr-2"></i> Créer l'Événement
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- COLONNE 3: Liste des Événements (1/3 de la largeur sur grand écran) -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="p-6 bg-gray-100 rounded-xl shadow-lg border border-gray-300">
+                        <h3 class="text-xl font-bold mb-4 text-gray-900 flex items-center">
+                            <i data-lucide="list-checks" class="w-5 h-5 mr-2"></i> Événements Planifiés
+                        </h3>
+                        <div id="events-list" class="space-y-4">
+                            <!-- Les événements chargés depuis Firestore seront insérés ici -->
+                            <p class="text-gray-500 italic text-sm">Aucun événement chargé pour l'instant.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal/Popup pour l'enregistrement Solana -->
+            <div id="registration-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 hidden flex items-center justify-center p-4 z-50">
+                <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md space-y-4">
+                    <h4 class="text-xl font-bold text-solana flex items-center">
+                        <i data-lucide="scan-line" class="w-6 h-6 mr-2"></i> Inscription à l'Événement
+                    </h4>
+                    <p class="text-gray-600">Veuillez entrer votre adresse de portefeuille Solana (public key) pour confirmer votre participation. C'est l'adresse à laquelle vous recevrez vos PCT !</p>
+                    
+                    <div>
+                        <label for="solana-wallet-input" class="block text-sm font-medium text-gray-700">Adresse Solana</label>
+                        <input type="text" id="solana-wallet-input" class="mt-1 block w-full rounded-md border-solana border-2 shadow-sm p-3 font-mono text-sm" placeholder="Ex: 5DAs3...KjG9">
+                    </div>
+
+                    <div class="flex justify-end gap-2">
+                        <button onclick="closeModal()" class="px-4 py-2 text-sm font-medium rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 transition">
+                            Annuler
+                        </button>
+                        <button onclick="submitRegistration()" id="submit-registration-btn" class="px-4 py-2 text-sm font-medium rounded-md text-white bg-solana hover:bg-solana/80 transition">
+                            Confirmer l'Inscription
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Message de notification/erreur -->
+            <div id="message-box" class="fixed bottom-4 right-4 p-3 rounded-lg shadow-xl text-white hidden transition-opacity duration-300"></div>
+
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center mt-10 text-xs text-gray-400 border-t pt-4">
+            <p>Visitez PeopleCoin.com. &copy; 2025 Peoplecoin (PCT). Un jeton communautaire construit sur Solana.</p>
+        </footer>
     </div>
 
-    <!-- Section Présentation et Mission (Mise à jour) -->
-    <div id="presentation" class="mb-12 p-6 bg-green-50 rounded-xl shadow-inner">
-      <h2 class="text-2xl font-bold mb-4 text-pct-green border-b pb-2 border-pct-green/50">
-        🌟 Notre Mission : Proof-of-Cleanup
-      </h2>
-      <p class="text-gray-700 leading-relaxed mb-4">
-        Bienvenue sur **PeopleCoin.com**, le site officiel de **Peoplecoin (PCT)**. Ce jeton SPL sur Solana est le moteur d'un mouvement global qui lie la finance décentralisée à la responsabilité environnementale. Notre mission est de récompenser concrètement et immédiatement les citoyens qui contribuent activement à l'amélioration de notre planète.
-      </p>
-      <blockquote class="italic text-lg text-gray-600 border-l-4 border-pct-blue pl-4 py-2 bg-white/50 rounded-r-md">
-        « Gagnez du PCT pour chaque déchet ramassé. Transformez l'effort écologique en valeur numérique. »
-      </blockquote>
-    </div>
+    <!-- Logique JavaScript et Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, addDoc, setDoc, onSnapshot, collection, query, serverTimestamp, setLogLevel, getDocs, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    <!-- Nouvelle Section: Comment Gagner des PCT -->
-    <div id="gagner-pct" class="mb-12">
-      <h2 class="text-2xl font-bold mb-4 text-gray-900 border-b pb-2 border-gray-200">
-        💰 Comment Gagner des Peoplecoin (PCT) ?
-      </h2>
-      <p class="text-gray-600 mb-6">
-        Notre système **Proof-of-Cleanup** est simple et transparent. Il suffit de prouver votre action via la communauté :
-      </p>
-      
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Étape 1 -->
-        <div class="bg-white p-5 rounded-lg shadow-md border-t-4 border-red-500">
-          <p class="text-3xl font-extrabold text-red-500 mb-2">1.</p>
-          <h3 class="font-semibold text-lg mb-2">Photo AVANT</h3>
-          <p class="text-sm text-gray-600">Prenez une photo géolocalisée de la zone polluée que vous allez nettoyer.</p>
-        </div>
-        <!-- Étape 2 -->
-        <div class="bg-white p-5 rounded-lg shadow-md border-t-4 border-yellow-500">
-          <p class="text-3xl font-extrabold text-yellow-500 mb-2">2.</p>
-          <h3 class="font-semibold text-lg mb-2">L'Action</h3>
-          <p class="text-sm text-gray-600">Ramassez les déchets et mettez-les dans des sacs poubelles appropriés.</p>
-        </div>
-        <!-- Étape 3 -->
-        <div class="bg-white p-5 rounded-lg shadow-md border-t-4 border-pct-green">
-          <p class="text-3xl font-extrabold text-pct-green mb-2">3.</p>
-          <h3 class="font-semibold text-lg mb-2">Photo APRÈS & Récompense</h3>
-          <p class="text-sm text-gray-600">Prenez une photo de la zone propre et des sacs. Soumettez le tout à la communauté pour recevoir vos PCT.</p>
-        </div>
-      </div>
-    </div>
+        // setLogLevel('debug'); // Décommenter pour le débogage de Firestore
 
-    <!-- Section Informations Techniques -->
-    <div id="tech-info" class="mb-12">
-      <h2 class="text-2xl font-bold mb-4 text-gray-900 border-b pb-2 border-gray-200">
-        🔍 Informations Techniques
-      </h2>
-      <div class="bg-gray-100 p-4 rounded-lg">
-        <table class="w-full text-left text-sm table-auto">
-          <tbody class="divide-y divide-gray-200">
-            <tr class="hover:bg-gray-200">
-              <th class="py-2 px-3 font-semibold w-1/4">Nom</th>
-              <td class="py-2 px-3">Peoplecoin</td>
-            </tr>
-            <tr class="hover:bg-gray-200">
-              <th class="py-2 px-3 font-semibold">Symbole</th>
-              <td class="py-2 px-3">PCT</td>
-            </tr>
-            <tr class="hover:bg-gray-200">
-              <th class="py-2 px-3 font-semibold">Réseau</th>
-              <td class="py-2 px-3">Solana (SPL Token)</td>
-            </tr>
-            <tr class="hover:bg-gray-200">
-              <th class="py-2 px-3 font-semibold">Adresse du Mint (Contrat)</th>
-              <td class="py-2 px-3 font-mono address-box text-solana">
-                <code>5bAkoTnsvncze65z3QxHbLbX8fvU3YMCwmNDRaYau4BN</code>
-              </td>
-            </tr>
-            <tr class="hover:bg-gray-200">
-              <th class="py-2 px-3 font-semibold">Royalties</th>
-              <td class="py-2 px-3">5 %</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+        // --- GLOBAL STATE & FIREBASE SETUP ---
+        let db;
+        let auth;
+        let userId = null;
+        let currentEventIdToRegister = null;
+        let isLocalMode = false; // Nouvelle variable pour suivre le mode
 
-    <!-- Section Roadmap (Mise à jour pour l'écologie) -->
-    <div id="roadmap" class="mb-12">
-      <h2 class="text-2xl font-bold mb-4 text-gray-900 border-b pb-2 border-gray-200">
-        🛠️ Feuille de Route (Roadmap)
-      </h2>
-      <div class="space-y-4">
-        <!-- Q4 2025 -->
-        <div class="p-4 bg-gray-100 rounded-lg border-l-4 border-pct-blue">
-            <span class="font-semibold text-sm text-gray-500">Q4 2025</span>
-            <p class="font-medium">Déploiement du token SPL, enrichissement IPFS, visibilité sur Phantom & Solscan.</p>
-        </div>
-        <!-- Q1 2026 -->
-        <div class="p-4 bg-gray-100 rounded-lg border-l-4 border-pct-green">
-            <span class="font-semibold text-sm text-gray-500">Q1 2026</span>
-            <p class="font-medium">Lancement du site officiel et de la **Communauté Proof-of-Cleanup** (Discord/Telegram).</p>
-        </div>
-        <!-- Q2 2026 -->
-        <div class="p-4 bg-gray-100 rounded-lg border-l-4 border-pct-blue">
-            <span class="font-semibold text-sm text-gray-500">Q2 2026</span>
-            <p class="font-medium">Implémentation du système de **validation PCT** par les modérateurs communautaires et premier Airdrop de récompense.</p>
-        </div>
-        <!-- Q3 2026 -->
-        <div class="p-4 bg-gray-100 rounded-lg border-l-4 border-pct-green">
-            <span class="font-semibold text-sm text-gray-500">Q3 2026</span>
-            <p class="font-medium">Développement de l'application mobile dédiée (ou Bot) pour faciliter la soumission de preuves et la géolocalisation.</p>
-        </div>
-        <!-- Q4 2026 - Nouveau point CEX -->
-        <div class="p-4 bg-gray-100 rounded-lg border-l-4 border-solana">
-            <span class="font-semibold text-sm text-gray-500">Q4 2026</span>
-            <p class="font-medium">Objectif : Premier listing sur une plateforme d'échange centralisée (CEX) pour augmenter l'accessibilité globale du PCT.</p>
-        </div>
-      </div>
-    </div>
+        // Global variables provided by the Canvas environment (injecté lors de l'exécution dans l'environnement)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        
+        // **CORRECTION POUR EXÉCUTION LOCALE**
+        // Si la configuration est manquante (en exécution locale), nous utilisons une configuration factice 
+        // pour empêcher l'erreur 'initializeApp' de planter l'application. 
+        const defaultFirebaseConfig = { 
+            apiKey: "PLACEHOLDER_API_KEY", 
+            authDomain: "local-test-domain.firebaseapp.com",
+            projectId: "local-test-project"
+        };
+        const firebaseConfig = (typeof __firebase_config !== 'undefined' && Object.keys(JSON.parse(__firebase_config)).length > 0) 
+            ? JSON.parse(__firebase_config) 
+            : defaultFirebaseConfig;
 
-    <!-- Section Rejoindre -->
-    <div id="rejoindre" class="p-6 bg-blue-50 rounded-xl shadow-lg">
-      <h2 class="text-2xl font-bold mb-4 text-pct-blue border-b pb-2 border-pct-blue/50">
-        🤝 Rejoindre le Mouvement Peoplecoin
-      </h2>
-      <p class="text-gray-700 mb-4">
-        Votre participation est essentielle. Chaque membre contribue à la fois à l'écologie et à la croissance du projet.
-      </p>
-      <ul class="space-y-2 list-disc list-inside text-gray-600">
-        <li class="flex items-center"><span class="text-pct-green text-xl mr-2">🌱</span><span class="font-semibold">Agissez :</span> Commencez à planifier votre premier nettoyage pour gagner des PCT.</li>
-        <li class="flex items-center"><span class="text-pct-green text-xl mr-2">💬</span><span class="font-semibold">Rejoignez :</span> Rendez-vous sur notre Discord/Telegram (Lien à venir) pour l'intégration Proof-of-Cleanup.</li>
-        <li class="flex items-center"><span class="text-pct-green text-xl mr-2">📢</span><span class="font-semibold">Partagez :</span> Faites connaître notre mission sur les réseaux sociaux.</li>
-      </ul>
-    </div>
+        // Déterminer si nous sommes en mode local (en comparant les structures des objets, pas les références)
+        isLocalMode = JSON.stringify(firebaseConfig) === JSON.stringify(defaultFirebaseConfig);
 
-    <!-- Footer -->
-    <footer class="text-center mt-10 text-xs text-gray-400 border-t pt-4">
-        <p>Visitez PeopleCoin.com. &copy; 2025 Peoplecoin (PCT). Un jeton communautaire construit sur Solana.</p>
-    </footer>
-  </div>
+
+        /** Utility to display messages (error or success) without using alert() */
+        function showMessage(text, isError = false) {
+            const box = document.getElementById('message-box');
+            box.textContent = text;
+            box.classList.remove('hidden', 'bg-red-500', 'bg-pct-green');
+            box.classList.add(isError ? 'bg-red-500' : 'bg-pct-green');
+            setTimeout(() => {
+                box.classList.add('hidden');
+            }, 3000);
+        }
+
+        /** Initialize Firebase and authenticate the user */
+        async function initFirebase() {
+            const statusEl = document.getElementById('auth-status');
+            const eventCreationForm = document.getElementById('event-creation-form');
+            const createEventBtn = document.getElementById('create-event-btn');
+            
+            if (isLocalMode) {
+                // Si nous sommes en mode local, désactivez les fonctionnalités DB
+                statusEl.textContent = "Mode Local/Démo : Les fonctionnalités de base de données (création/inscription) sont désactivées. Exécutez dans l'environnement prévu pour l'activation complète.";
+                statusEl.classList.remove('text-red-500');
+                statusEl.classList.add('text-gray-600', 'italic');
+                
+                // Désactiver le formulaire de création
+                eventCreationForm.onsubmit = (e) => {
+                    e.preventDefault();
+                    showMessage("La création d'événement est désactivée en mode démo.", true);
+                };
+                createEventBtn.disabled = true;
+                createEventBtn.classList.remove('bg-pct-green', 'hover:bg-pct-blue');
+                createEventBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+
+                return; 
+            }
+
+            try {
+                // Initialisation réelle
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                // Sign in using the custom token or anonymously
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                // Listen for authentication state changes
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        statusEl.textContent = `Connecté (Authentifié). ID utilisateur : ${userId}`;
+                        statusEl.classList.remove('text-red-500', 'italic', 'text-gray-600');
+                        statusEl.classList.add('text-pct-green', 'font-bold');
+                        // Une fois authentifié, charger les événements
+                        loadEvents();
+                    } else {
+                        userId = null;
+                        statusEl.textContent = "Déconnecté. Connexion requise pour les interactions DB.";
+                        statusEl.classList.add('text-red-500');
+                        statusEl.classList.remove('text-pct-green', 'font-bold');
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error during Firebase initialization or sign-in:", error);
+                showMessage(`Erreur d'authentification ou d'initialisation : ${error.message}`, true);
+                statusEl.textContent = "Erreur fatale d'initialisation Firebase. Voir console.";
+                statusEl.classList.add('text-red-500');
+            }
+        }
+        
+        // --- EVENT CREATION LOGIC ---
+
+        /** Saves a new event to Firestore */
+        async function saveEvent(event) {
+            event.preventDefault();
+            if (isLocalMode || !userId) {
+                showMessage("Fonctionnalité désactivée ou utilisateur non connecté.", true);
+                return;
+            }
+
+            const name = document.getElementById('event-name').value.trim();
+            const date = document.getElementById('event-date').value;
+            const time = document.getElementById('event-time').value;
+            const location = document.getElementById('event-location').value.trim();
+            const description = document.getElementById('event-description').value.trim();
+            
+            if (!name || !date || !time || !location) {
+                showMessage("Veuillez remplir tous les champs obligatoires.", true);
+                return;
+            }
+
+            try {
+                const eventData = {
+                    name,
+                    date,
+                    time,
+                    location,
+                    description,
+                    creatorId: userId,
+                    createdAt: serverTimestamp(),
+                    registrationCount: 0 // Initial count
+                };
+
+                const eventsRef = collection(db, `artifacts/${appId}/public/data/pct_events`);
+                await addDoc(eventsRef, eventData);
+                
+                showMessage(`Événement "${name}" créé avec succès !`);
+                event.target.reset(); // Clear the form
+
+            } catch (error) {
+                console.error("Error creating event:", error);
+                showMessage(`Erreur lors de la création de l'événement: ${error.message}`, true);
+            }
+        }
+        window.saveEvent = saveEvent;
+
+        // --- EVENT LOADING LOGIC ---
+
+        /** Loads events in real-time from Firestore */
+        function loadEvents() {
+            if (isLocalMode || !db || !userId) return;
+
+            const eventsRef = collection(db, `artifacts/${appId}/public/data/pct_events`);
+            const q = query(eventsRef); 
+
+            onSnapshot(q, async (querySnapshot) => {
+                const eventsListEl = document.getElementById('events-list');
+                eventsListEl.innerHTML = '';
+                
+                if (querySnapshot.empty) {
+                    eventsListEl.innerHTML = '<p class="text-gray-500 italic text-sm p-4 bg-white rounded-lg">Aucun événement planifié pour l\'instant. Soyez le premier à en créer un !</p>';
+                    return;
+                }
+
+                // Array to hold promises for fetching registrations
+                const eventPromises = [];
+                
+                querySnapshot.forEach(docSnapshot => {
+                    eventPromises.push((async () => {
+                        const event = docSnapshot.data();
+                        const eventId = docSnapshot.id;
+                        
+                        // NOTE: Lecture de la sous-collection pour obtenir le compte exact
+                        const registrationsRef = collection(db, `artifacts/${appId}/public/data/pct_events/${eventId}/registrations`);
+                        // Utiliser getDocs pour la vérification initiale de l'état d'inscription
+                        const regSnapshot = await getDocs(registrationsRef); 
+                        const registrationCount = regSnapshot.size;
+                        
+                        // Check if the current user is registered
+                        const isRegistered = regSnapshot.docs.some(regDoc => regDoc.id === userId);
+
+                        return { event, eventId, registrationCount, isRegistered };
+                    })());
+                });
+
+                // Wait for all registrations to be fetched
+                const eventsData = await Promise.all(eventPromises);
+                
+                // Render all events
+                eventsData.forEach(({ event, eventId, registrationCount, isRegistered }) => {
+                    const eventHtml = `
+                        <div class="event-card p-4 bg-white rounded-lg shadow border-l-4 ${isRegistered ? 'border-solana' : 'border-pct-green'} space-y-2">
+                            <h4 class="font-bold text-lg text-gray-900">${event.name}</h4>
+                            <p class="text-sm text-gray-600 flex items-center"><i data-lucide="map-pin" class="w-4 h-4 mr-2 text-red-500"></i>${event.location}</p>
+                            <p class="text-sm text-gray-600 flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-2 text-pct-blue"></i>${event.date} à ${event.time}</p>
+                            <p class="text-xs text-gray-500 mt-1">${event.description.substring(0, 100)}${event.description.length > 100 ? '...' : ''}</p>
+                            <div class="flex items-center justify-between pt-2 border-t mt-2">
+                                <span class="text-sm font-semibold flex items-center text-solana">
+                                    <i data-lucide="users" class="w-4 h-4 mr-1"></i> ${registrationCount} participants
+                                </span>
+                                <button onclick="openRegistrationModal('${eventId}')" 
+                                    class="px-3 py-1 text-xs font-medium rounded-full transition duration-150 ease-in-out 
+                                    ${isRegistered 
+                                        ? 'bg-solana text-white hover:bg-solana/80 cursor-not-allowed' 
+                                        : 'bg-pct-green text-white hover:bg-pct-blue'}"
+                                    ${isRegistered ? 'disabled' : ''}>
+                                    ${isRegistered ? 'Inscrit' : 'S\'inscrire'}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    eventsListEl.insertAdjacentHTML('beforeend', eventHtml);
+                });
+                
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+
+            }, (error) => {
+                console.error("Error loading events:", error);
+                showMessage("Erreur lors du chargement des événements.", true);
+            });
+        }
+        
+        // --- REGISTRATION MODAL LOGIC ---
+
+        /** Opens the registration modal */
+        function openRegistrationModal(eventId) {
+            if (isLocalMode || !userId) {
+                showMessage("Fonctionnalité désactivée en mode démo ou utilisateur non connecté.", true);
+                return;
+            }
+            currentEventIdToRegister = eventId;
+            document.getElementById('registration-modal').classList.remove('hidden');
+        }
+        window.openRegistrationModal = openRegistrationModal;
+
+        /** Closes the registration modal */
+        function closeModal() {
+            document.getElementById('registration-modal').classList.add('hidden');
+            document.getElementById('solana-wallet-input').value = '';
+            currentEventIdToRegister = null;
+        }
+        window.closeModal = closeModal;
+        
+        /** Submits the Solana wallet registration and updates the count */
+        async function submitRegistration() {
+            const walletAddress = document.getElementById('solana-wallet-input').value.trim();
+            const eventId = currentEventIdToRegister;
+            
+            if (isLocalMode || !userId || !walletAddress || eventId === null) {
+                showMessage("Opération impossible. Vérifiez l'adresse ou la connexion.", true);
+                return;
+            }
+
+            // Simple validation for Solana address format (basic check for length/content)
+            if (walletAddress.length < 32 || !/^[A-Za-z0-9]+$/.test(walletAddress)) {
+                 showMessage("Veuillez entrer une adresse Solana valide (au moins 32 caractères alphanumériques).", true);
+                return;
+            }
+
+            try {
+                // 1. Enregistrement public dans la sous-collection
+                const registrationRef = doc(db, `artifacts/${appId}/public/data/pct_events/${eventId}/registrations`, userId);
+                
+                const registrationData = {
+                    solanaWallet: walletAddress,
+                    registeredAt: serverTimestamp(),
+                    registeredBy: userId 
+                };
+
+                await setDoc(registrationRef, registrationData);
+                
+                // 2. Mise à jour atomique du compteur sur le document parent
+                const eventDocRef = doc(db, `artifacts/${appId}/public/data/pct_events`, eventId);
+                await updateDoc(eventDocRef, {
+                    // Utiliser increment() pour mettre à jour le compteur de manière sécurisée et atomique
+                    registrationCount: increment(1) 
+                });
+
+                showMessage("Inscription confirmée ! Vous recevrez vos PCT à cette adresse après l'événement.");
+                closeModal(); // Fermer le modal
+
+            } catch (error) {
+                console.error("Error during registration:", error);
+                showMessage(`Erreur d'inscription: ${error.message}`, true);
+            }
+        }
+        window.submitRegistration = submitRegistration;
+
+
+        // --- GENERAL UI LOGIC ---
+
+        /** Gère le changement de vue (onglet) */
+        function showView(viewId) {
+            document.querySelectorAll('.view-content').forEach(view => {
+                view.classList.add('hidden');
+            });
+            document.getElementById(`view-${viewId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('bg-pct-blue', 'text-white', 'shadow-lg');
+                button.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+            });
+
+            const activeTab = document.getElementById(`tab-${viewId}`);
+            if (activeTab) {
+                activeTab.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+                activeTab.classList.add('bg-pct-blue', 'text-white', 'shadow-lg');
+            }
+            
+            if (window.lucide) {
+                 window.lucide.createIcons();
+            }
+        }
+        window.showView = showView; // Rendre disponible globalement
+
+        // Initialisation au chargement de la fenêtre
+        window.onload = function() {
+            initFirebase();
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+            showView('home'); // Afficher la vue d'accueil par défaut
+        };
+    </script>
 
 </body>
 </html>
