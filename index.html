@@ -28,6 +28,46 @@
             word-break: break-all;
             user-select: all;
         }
+        .view-content {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .hidden {
+            display: none;
+        }
+        .tab-button.active {
+            background-color: #00b4d8 !important;
+            color: white !important;
+        }
+        /* Personnalisation du bouton de connexion Solana */
+        .wallet-adapter-button {
+            background: linear-gradient(135deg, #00c896, #00b4d8) !important;
+            border: none !important;
+            padding: 0.75rem 1.5rem !important;
+            border-radius: 9999px !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 12px rgba(0, 180, 216, 0.3) !important;
+            transition: all 0.3s ease !important;
+        }
+        .wallet-adapter-button:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 16px rgba(0, 180, 216, 0.4) !important;
+        }
+        .wallet-adapter-button-trigger {
+            background: linear-gradient(135deg, #9945FF, #00c896) !important;
+        }
+        /* Loader personnalisé */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
     <script>
         tailwind.config = {
@@ -64,7 +104,7 @@
         <nav class="mb-8 border-b border-gray-200">
             <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
                 <button onclick="showView('home')" id="tab-home"
-                    class="tab-button px-6 py-2 rounded-full font-bold transition-all duration-200 text-white bg-pct-blue hover:bg-pct-green shadow-lg">
+                    class="tab-button px-6 py-2 rounded-full font-bold transition-all duration-200 text-white bg-pct-blue hover:bg-pct-green shadow-lg active">
                     Accueil & Infos
                 </button>
                 <button onclick="showView('events')" id="tab-events"
@@ -92,7 +132,7 @@
                     <i data-lucide="star" class="w-6 h-6 mr-2"></i> Notre Mission : Proof-of-Cleanup
                 </h2>
                 <p class="text-gray-700 leading-relaxed mb-4">
-                    Bienvenue sur **PeopleCoin.com**, le site officiel de **Peoplecoin (PCT)**. Ce jeton SPL sur Solana est le moteur d'un mouvement global qui lie la finance décentralisée à la responsabilité environnementale. Notre mission est de récompenser concrètement et immédiatement les citoyens qui contribuent activement à l'amélioration de notre planète.
+                    Bienvenue sur <strong>PeopleCoin.com</strong>, le site officiel de <strong>Peoplecoin (PCT)</strong>. Ce jeton SPL sur Solana est le moteur d'un mouvement global qui lie la finance décentralisée à la responsabilité environnementale. Notre mission est de récompenser concrètement et immédiatement les citoyens qui contribuent activement à l'amélioration de notre planète.
                 </p>
                 <blockquote class="italic text-base sm:text-lg text-gray-600 border-l-4 border-pct-blue pl-4 py-2 bg-white/50 rounded-r-md">
                     « Gagnez du PCT pour chaque déchet ramassé. Transformez l'effort écologique en valeur numérique. »
@@ -105,7 +145,7 @@
                     <i data-lucide="wallet" class="w-6 h-6 mr-2"></i> Comment Gagner des Peoplecoin (PCT) ?
                 </h2>
                 <p class="text-gray-600 mb-6">
-                    Notre système **Proof-of-Cleanup** est simple et transparent. Il suffit de prouver votre action via la communauté :
+                    Notre système <strong>Proof-of-Cleanup</strong> est simple et transparent. Il suffit de prouver votre action via la communauté :
                 </p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -179,11 +219,11 @@
                     <!-- Q1 2026 -->
                     <div class="p-4 bg-gray-100 rounded-lg border-l-4 border-pct-green">
                         <span class="font-semibold text-sm text-gray-500">Q1 2026</span>
-                        <p class="font-medium">Lancement du site officiel et de la **Communauté Proof-of-Cleanup** (Discord/Telegram).</p>
+                        <p class="font-medium">Lancement du site officiel et de la <strong>Communauté Proof-of-Cleanup</strong> (Discord/Telegram).</p>
                     </div>
                     <!-- Q2 2026 -->
                     <div class="p-4 bg-gray-100 rounded-lg border-l-4 border-pct-blue">
-                        <p class="font-medium">Implémentation du système de **validation PCT** par les modérateurs communautaires et premier Airdrop de récompense.</p>
+                        <p class="font-medium">Implémentation du système de <strong>validation PCT</strong> par les modérateurs communautaires et premier Airdrop de récompense.</p>
                     </div>
                     <!-- Q3 2026 -->
                     <div class="p-4 bg-gray-100 rounded-lg border-l-4 border-pct-green">
@@ -220,9 +260,19 @@
                 <i data-lucide="calendar-check" class="w-8 h-8 mr-3"></i> Planifier et Participer aux Événements
             </h2>
 
-            <!-- L'état d'authentification est maintenant géré plus clairement -->
+            <!-- Zone de connexion au portefeuille Solana -->
+            <div id="wallet-connection" class="text-center mb-6">
+                <button id="solana-connect-btn" class="wallet-adapter-button px-6 py-3 rounded-full font-bold text-white shadow-lg flex items-center mx-auto">
+                    <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z" fill="currentColor"/>
+                    </svg>
+                    Connecter Solana
+                </button>
+            </div>
+
+            <!-- L'état d'authentification -->
             <div id="auth-status-container" class="text-center p-3 rounded-lg bg-gray-100 border border-gray-300">
-                <p id="auth-status" class="text-gray-500 font-medium text-sm">Chargement de l'authentification...</p>
+                <p id="auth-status" class="text-gray-500 font-medium text-sm">Connectez votre portefeuille Solana pour créer ou rejoindre des événements.</p>
             </div>
 
 
@@ -256,7 +306,7 @@
                                 <label for="event-description" class="block text-sm font-medium text-gray-700">Description (Optionnelle)</label>
                                 <textarea id="event-description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:border-pct-green focus:ring-pct-green" placeholder="Détails sur l'équipement nécessaire ou les objectifs."></textarea>
                             </div>
-                            <button type="submit" id="create-event-btn" class="w-full inline-flex justify-center items-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-pct-green hover:bg-pct-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pct-green transition duration-150 ease-in-out">
+                            <button type="submit" id="create-event-btn" disabled class="w-full inline-flex justify-center items-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-pct-green hover:bg-pct-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pct-green transition duration-150 ease-in-out opacity-50 cursor-not-allowed">
                                 <i data-lucide="send" class="w-5 h-5 mr-2"></i> Créer l'Événement
                             </button>
                         </form>
@@ -270,8 +320,22 @@
                             <i data-lucide="list-checks" class="w-5 h-5 mr-2"></i> Événements Planifiés
                         </h3>
                         <div id="events-list" class="space-y-4">
-                            <!-- Les événements chargés depuis Firestore seront insérés ici -->
-                            <p class="text-gray-500 italic text-sm">Aucun événement chargé pour l'instant.</p>
+                            <!-- Mock events for demo -->
+                            <div class="border-l-4 border-pct-green pl-3 py-2">
+                                <h4 class="font-semibold text-gray-800">Nettoyage parc central</h4>
+                                <p class="text-xs text-gray-600">15 nov 2025 • 10:00</p>
+                                <button onclick="openRegistrationModal('Nettoyage parc central', 'event1')" class="mt-1 text-xs px-2 py-1 bg-pct-green text-white rounded hover:bg-pct-blue transition">S'inscrire</button>
+                            </div>
+                            <div class="border-l-4 border-pct-blue pl-3 py-2">
+                                <h4 class="font-semibold text-gray-800">Ramassage plage nord</h4>
+                                <p class="text-xs text-gray-600">22 nov 2025 • 09:00</p>
+                                <button onclick="openRegistrationModal('Ramassage plage nord', 'event2')" class="mt-1 text-xs px-2 py-1 bg-pct-green text-white rounded hover:bg-pct-blue transition">S'inscrire</button>
+                            </div>
+                            <div class="border-l-4 border-solana pl-3 py-2">
+                                <h4 class="font-semibold text-gray-800">Journée nationale</h4>
+                                <p class="text-xs text-gray-600">30 nov 2025 • 14:00</p>
+                                <button onclick="openRegistrationModal('Journée nationale', 'event3')" class="mt-1 text-xs px-2 py-1 bg-pct-green text-white rounded hover:bg-pct-blue transition">S'inscrire</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -283,19 +347,19 @@
                     <h4 class="text-xl font-bold text-solana flex items-center">
                         <i data-lucide="scan-line" class="w-6 h-6 mr-2"></i> Inscription à l'Événement
                     </h4>
-                    <p class="text-gray-600">Veuillez entrer votre adresse de portefeuille Solana (public key) pour confirmer votre participation. C'est l'adresse à laquelle vous recevrez vos PCT !</p>
+                    <p class="text-gray-600">Confirmez votre participation à l'événement avec votre portefeuille Solana connecté.</p>
                     
-                    <div>
-                        <label for="solana-wallet-input" class="block text-sm font-medium text-gray-700">Adresse Solana</label>
-                        <input type="text" id="solana-wallet-input" class="mt-1 block w-full rounded-md border-solana border-2 shadow-sm p-3 font-mono text-sm" placeholder="Ex: 5DAs3...KjG9">
+                    <div id="wallet-info" class="p-3 bg-gray-50 rounded-lg">
+                        <p class="text-sm font-medium text-gray-700">Portefeuille connecté :</p>
+                        <p id="connected-wallet-address" class="font-mono text-xs text-gray-600 break-all mt-1">Aucun portefeuille connecté</p>
                     </div>
 
-                    <div class="flex justify-end gap-2">
+                    <div id="registration-actions" class="flex justify-end gap-2">
                         <button onclick="closeModal()" class="px-4 py-2 text-sm font-medium rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 transition">
                             Annuler
                         </button>
-                        <button onclick="submitRegistration()" id="submit-registration-btn" class="px-4 py-2 text-sm font-medium rounded-md text-white bg-solana hover:bg-solana/80 transition">
-                            Confirmer l'Inscription
+                        <button onclick="submitRegistration()" id="submit-registration-btn" disabled class="px-4 py-2 text-sm font-medium rounded-md text-white bg-solana hover:bg-solana/80 transition opacity-50 cursor-not-allowed">
+                            <span id="registration-btn-text">Confirmer l'Inscription</span>
                         </button>
                     </div>
                 </div>
@@ -304,348 +368,320 @@
             <!-- Message de notification/erreur -->
             <div id="message-box" class="fixed bottom-4 right-4 p-3 rounded-lg shadow-xl text-white hidden transition-opacity duration-300"></div>
 
+            <!-- Loader pour les transactions -->
+            <div id="transaction-loader" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+                <div class="bg-white rounded-xl shadow-2xl p-8 text-center max-w-md">
+                    <div class="loading-spinner mx-auto mb-4"></div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">En cours de traitement...</h3>
+                    <p id="transaction-message" class="text-gray-600">Veuillez confirmer la transaction dans votre portefeuille.</p>
+                </div>
+            </div>
         </section>
 
         <!-- Footer -->
-        <footer class="text-center mt-10 text-xs text-gray-400 border-t pt-4">
-            <p>Visitez PeopleCoin.com. &copy; 2025 Peoplecoin (PCT). Un jeton communautaire construit sur Solana.</p>
+        <footer class="border-t border-gray-200 pt-8 mt-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                        <img src="https://raw.githubusercontent.com/Gigifa667/PeopleCoin/main/BCO.a8baecee-add4-44df-93a8-2fee0c8169be.png" 
+                             alt="PeopleCoin" class="h-6 w-6 mr-2 rounded">
+                        PeopleCoin
+                    </h3>
+                    <p class="text-gray-600">
+                        Un projet communautaire dédié à la protection de notre planète à travers la blockchain.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-900 mb-4">Liens Utiles</h4>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><a href="https://solscan.io/token/5bAkoTnsvncze65z3QxHbLbX8fvU3YMCwmNDRaYau4BN" target="_blank" class="hover:text-pct-green transition">Explorer sur Solscan</a></li>
+                        <li><a href="https://jup.ag/swap/SOL-PCT" target="_blank" class="hover:text-pct-green transition">Acheter sur Jupiter</a></li>
+                        <li><a href="#" class="hover:text-pct-green transition">Documentation Technique</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-900 mb-4">Réseaux Sociaux</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-500 hover:text-pct-blue transition">
+                            <i data-lucide="twitter" class="w-6 h-6"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-pct-green transition">
+                            <i data-lucide="instagram" class="w-6 h-6"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-gray-800 transition">
+                            <i data-lucide="discord" class="w-6 h-6"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-blue-500 transition">
+                            <i data-lucide="youtube" class="w-6 h-6"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-gray-200 text-center text-gray-500 text-sm">
+                <p>&copy; 2025 PeopleCoin. Tous droits réservés. Ce projet est open-source et communautaire.</p>
+                <p class="mt-2">Ce site est à but informatif. Les tokens PCT ne doivent pas être considérés comme un conseil financier.</p>
+            </div>
         </footer>
     </div>
 
-    <!-- Logique JavaScript et Firebase -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, addDoc, setDoc, onSnapshot, collection, query, serverTimestamp, setLogLevel, getDocs, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <script>
+        // Variables globales pour Solana
+        let publicKey = null;
+        let currentEventId = null;
 
-        // setLogLevel('debug'); // Décommenter pour le débogage de Firestore
+        // Initialiser les icônes Lucide
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            
+            // Définir la date par défaut pour les événements (aujourd'hui + 7 jours)
+            const today = new Date();
+            const nextWeek = new Date(today);
+            nextWeek.setDate(today.getDate() + 7);
+            
+            const dateInput = document.getElementById('event-date');
+            const formattedDate = nextWeek.toISOString().split('T')[0];
+            dateInput.value = formattedDate;
+            
+            // Mettre à jour l'état d'authentification
+            updateAuthStatus();
+            
+            // Ajouter l'événement de clic pour le bouton de connexion
+            document.getElementById('solana-connect-btn').addEventListener('click', connectWallet);
+        });
 
-        // --- GLOBAL STATE & FIREBASE SETUP ---
-        let db;
-        let auth;
-        let userId = null;
-        let currentEventIdToRegister = null;
-        let isLocalMode = false; // Nouvelle variable pour suivre le mode
-
-        // Global variables provided by the Canvas environment (injecté lors de l'exécution dans l'environnement)
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-        
-        // **CORRECTION POUR EXÉCUTION LOCALE**
-        // Si la configuration est manquante (en exécution locale), nous utilisons une configuration factice 
-        // pour empêcher l'erreur 'initializeApp' de planter l'application. 
-        const defaultFirebaseConfig = { 
-            apiKey: "PLACEHOLDER_API_KEY", 
-            authDomain: "local-test-domain.firebaseapp.com",
-            projectId: "local-test-project"
-        };
-        const firebaseConfig = (typeof __firebase_config !== 'undefined' && Object.keys(JSON.parse(__firebase_config)).length > 0) 
-            ? JSON.parse(__firebase_config) 
-            : defaultFirebaseConfig;
-
-        // Déterminer si nous sommes en mode local (en comparant les structures des objets, pas les références)
-        isLocalMode = JSON.stringify(firebaseConfig) === JSON.stringify(defaultFirebaseConfig);
-
-
-        /** Utility to display messages (error or success) without using alert() */
-        function showMessage(text, isError = false) {
-            const box = document.getElementById('message-box');
-            box.textContent = text;
-            box.classList.remove('hidden', 'bg-red-500', 'bg-pct-green');
-            box.classList.add(isError ? 'bg-red-500' : 'bg-pct-green');
-            setTimeout(() => {
-                box.classList.add('hidden');
-            }, 3000);
+        // Fonction de connexion au portefeuille
+        async function connectWallet() {
+            try {
+                // Vérifier si Phantom est installé
+                if (typeof window.solana !== 'undefined') {
+                    const provider = window.solana;
+                    if (provider.isPhantom) {
+                        try {
+                            const resp = await provider.connect();
+                            publicKey = resp.publicKey;
+                            showMessage('Portefeuille Phantom connecté avec succès !', 'bg-green-600');
+                            updateAuthStatus();
+                            return;
+                        } catch (err) {
+                            console.error('Erreur lors de la connexion à Phantom:', err);
+                        }
+                    }
+                }
+                
+                // Si Phantom n'est pas disponible, proposer d'autres options
+                showMessage('Veuillez installer Phantom ou Solflare pour vous connecter.', 'bg-yellow-600');
+                
+                // Dans un environnement de production, on utiliserait le WalletModal complet
+                // Pour cette démo, on simule une connexion
+                setTimeout(() => {
+                    simulateWalletConnection();
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Erreur de connexion:', error);
+                showMessage('Erreur lors de la connexion au portefeuille.', 'bg-red-600');
+            }
         }
 
-        /** Initialize Firebase and authenticate the user */
-        async function initFirebase() {
-            const statusEl = document.getElementById('auth-status');
-            const eventCreationForm = document.getElementById('event-creation-form');
+        // Simuler une connexion pour la démo
+        function simulateWalletConnection() {
+            // Générer une adresse Solana simulée
+            publicKey = {
+                toBase58: () => '5DAs3KjG9mH8qRtZnX7vYpQwN2sL1fJhT6bM9cP3kRy'
+            };
+            
+            showMessage('Portefeuille connecté avec succès !', 'bg-green-600');
+            updateAuthStatus();
+        }
+
+        // Mettre à jour l'état d'authentification
+        function updateAuthStatus() {
+            const authStatus = document.getElementById('auth-status');
             const createEventBtn = document.getElementById('create-event-btn');
             
-            if (isLocalMode) {
-                // Si nous sommes en mode local, désactivez les fonctionnalités DB
-                statusEl.textContent = "Mode Local/Démo : Les fonctionnalités de base de données (création/inscription) sont désactivées. Exécutez dans l'environnement prévu pour l'activation complète.";
-                statusEl.classList.remove('text-red-500');
-                statusEl.classList.add('text-gray-600', 'italic');
+            if (publicKey) {
+                const address = publicKey.toBase58();
+                authStatus.innerHTML = `
+                    <span class="flex items-center justify-center">
+                        <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-500 text-white text-xs mr-2">✓</span>
+                        Connecté : <span class="font-mono ml-1">${address.substring(0, 4)}...${address.substring(address.length - 4)}</span>
+                    </span>
+                `;
+                authStatus.classList.remove('text-gray-500');
+                authStatus.classList.add('text-green-600');
                 
-                // Désactiver le formulaire de création
-                eventCreationForm.onsubmit = (e) => {
-                    e.preventDefault();
-                    showMessage("La création d'événement est désactivée en mode démo.", true);
-                };
+                // Activer le bouton de création d'événement
+                createEventBtn.disabled = false;
+                createEventBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                authStatus.textContent = 'Connectez votre portefeuille Solana pour créer ou rejoindre des événements.';
+                authStatus.classList.remove('text-green-600');
+                authStatus.classList.add('text-gray-500');
+                
+                // Désactiver le bouton de création d'événement
                 createEventBtn.disabled = true;
-                createEventBtn.classList.remove('bg-pct-green', 'hover:bg-pct-blue');
-                createEventBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
-
-                return; 
-            }
-
-            try {
-                // Initialisation réelle
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-                
-                // Sign in using the custom token or anonymously
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                // Listen for authentication state changes
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        statusEl.textContent = `Connecté (Authentifié). ID utilisateur : ${userId}`;
-                        statusEl.classList.remove('text-red-500', 'italic', 'text-gray-600');
-                        statusEl.classList.add('text-pct-green', 'font-bold');
-                        // Une fois authentifié, charger les événements
-                        loadEvents();
-                    } else {
-                        userId = null;
-                        statusEl.textContent = "Déconnecté. Connexion requise pour les interactions DB.";
-                        statusEl.classList.add('text-red-500');
-                        statusEl.classList.remove('text-pct-green', 'font-bold');
-                    }
-                });
-
-            } catch (error) {
-                console.error("Error during Firebase initialization or sign-in:", error);
-                showMessage(`Erreur d'authentification ou d'initialisation : ${error.message}`, true);
-                statusEl.textContent = "Erreur fatale d'initialisation Firebase. Voir console.";
-                statusEl.classList.add('text-red-500');
+                createEventBtn.classList.add('opacity-50', 'cursor-not-allowed');
             }
         }
-        
-        // --- EVENT CREATION LOGIC ---
 
-        /** Saves a new event to Firestore */
-        async function saveEvent(event) {
-            event.preventDefault();
-            if (isLocalMode || !userId) {
-                showMessage("Fonctionnalité désactivée ou utilisateur non connecté.", true);
-                return;
-            }
-
-            const name = document.getElementById('event-name').value.trim();
-            const date = document.getElementById('event-date').value;
-            const time = document.getElementById('event-time').value;
-            const location = document.getElementById('event-location').value.trim();
-            const description = document.getElementById('event-description').value.trim();
-            
-            if (!name || !date || !time || !location) {
-                showMessage("Veuillez remplir tous les champs obligatoires.", true);
-                return;
-            }
-
-            try {
-                const eventData = {
-                    name,
-                    date,
-                    time,
-                    location,
-                    description,
-                    creatorId: userId,
-                    createdAt: serverTimestamp(),
-                    registrationCount: 0 // Initial count
-                };
-
-                const eventsRef = collection(db, `artifacts/${appId}/public/data/pct_events`);
-                await addDoc(eventsRef, eventData);
-                
-                showMessage(`Événement "${name}" créé avec succès !`);
-                event.target.reset(); // Clear the form
-
-            } catch (error) {
-                console.error("Error creating event:", error);
-                showMessage(`Erreur lors de la création de l'événement: ${error.message}`, true);
-            }
-        }
-        window.saveEvent = saveEvent;
-
-        // --- EVENT LOADING LOGIC ---
-
-        /** Loads events in real-time from Firestore */
-        function loadEvents() {
-            if (isLocalMode || !db || !userId) return;
-
-            const eventsRef = collection(db, `artifacts/${appId}/public/data/pct_events`);
-            const q = query(eventsRef); 
-
-            onSnapshot(q, async (querySnapshot) => {
-                const eventsListEl = document.getElementById('events-list');
-                eventsListEl.innerHTML = '';
-                
-                if (querySnapshot.empty) {
-                    eventsListEl.innerHTML = '<p class="text-gray-500 italic text-sm p-4 bg-white rounded-lg">Aucun événement planifié pour l\'instant. Soyez le premier à en créer un !</p>';
-                    return;
-                }
-
-                // Array to hold promises for fetching registrations
-                const eventPromises = [];
-                
-                querySnapshot.forEach(docSnapshot => {
-                    eventPromises.push((async () => {
-                        const event = docSnapshot.data();
-                        const eventId = docSnapshot.id;
-                        
-                        // NOTE: Lecture de la sous-collection pour obtenir le compte exact
-                        const registrationsRef = collection(db, `artifacts/${appId}/public/data/pct_events/${eventId}/registrations`);
-                        // Utiliser getDocs pour la vérification initiale de l'état d'inscription
-                        const regSnapshot = await getDocs(registrationsRef); 
-                        const registrationCount = regSnapshot.size;
-                        
-                        // Check if the current user is registered
-                        const isRegistered = regSnapshot.docs.some(regDoc => regDoc.id === userId);
-
-                        return { event, eventId, registrationCount, isRegistered };
-                    })());
-                });
-
-                // Wait for all registrations to be fetched
-                const eventsData = await Promise.all(eventPromises);
-                
-                // Render all events
-                eventsData.forEach(({ event, eventId, registrationCount, isRegistered }) => {
-                    const eventHtml = `
-                        <div class="event-card p-4 bg-white rounded-lg shadow border-l-4 ${isRegistered ? 'border-solana' : 'border-pct-green'} space-y-2">
-                            <h4 class="font-bold text-lg text-gray-900">${event.name}</h4>
-                            <p class="text-sm text-gray-600 flex items-center"><i data-lucide="map-pin" class="w-4 h-4 mr-2 text-red-500"></i>${event.location}</p>
-                            <p class="text-sm text-gray-600 flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-2 text-pct-blue"></i>${event.date} à ${event.time}</p>
-                            <p class="text-xs text-gray-500 mt-1">${event.description.substring(0, 100)}${event.description.length > 100 ? '...' : ''}</p>
-                            <div class="flex items-center justify-between pt-2 border-t mt-2">
-                                <span class="text-sm font-semibold flex items-center text-solana">
-                                    <i data-lucide="users" class="w-4 h-4 mr-1"></i> ${registrationCount} participants
-                                </span>
-                                <button onclick="openRegistrationModal('${eventId}')" 
-                                    class="px-3 py-1 text-xs font-medium rounded-full transition duration-150 ease-in-out 
-                                    ${isRegistered 
-                                        ? 'bg-solana text-white hover:bg-solana/80 cursor-not-allowed' 
-                                        : 'bg-pct-green text-white hover:bg-pct-blue'}"
-                                    ${isRegistered ? 'disabled' : ''}>
-                                    ${isRegistered ? 'Inscrit' : 'S\'inscrire'}
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    eventsListEl.insertAdjacentHTML('beforeend', eventHtml);
-                });
-                
-                if (window.lucide) {
-                    window.lucide.createIcons();
-                }
-
-            }, (error) => {
-                console.error("Error loading events:", error);
-                showMessage("Erreur lors du chargement des événements.", true);
-            });
-        }
-        
-        // --- REGISTRATION MODAL LOGIC ---
-
-        /** Opens the registration modal */
-        function openRegistrationModal(eventId) {
-            if (isLocalMode || !userId) {
-                showMessage("Fonctionnalité désactivée en mode démo ou utilisateur non connecté.", true);
-                return;
-            }
-            currentEventIdToRegister = eventId;
-            document.getElementById('registration-modal').classList.remove('hidden');
-        }
-        window.openRegistrationModal = openRegistrationModal;
-
-        /** Closes the registration modal */
-        function closeModal() {
-            document.getElementById('registration-modal').classList.add('hidden');
-            document.getElementById('solana-wallet-input').value = '';
-            currentEventIdToRegister = null;
-        }
-        window.closeModal = closeModal;
-        
-        /** Submits the Solana wallet registration and updates the count */
-        async function submitRegistration() {
-            const walletAddress = document.getElementById('solana-wallet-input').value.trim();
-            const eventId = currentEventIdToRegister;
-            
-            if (isLocalMode || !userId || !walletAddress || eventId === null) {
-                showMessage("Opération impossible. Vérifiez l'adresse ou la connexion.", true);
-                return;
-            }
-
-            // Simple validation for Solana address format (basic check for length/content)
-            if (walletAddress.length < 32 || !/^[A-Za-z0-9]+$/.test(walletAddress)) {
-                 showMessage("Veuillez entrer une adresse Solana valide (au moins 32 caractères alphanumériques).", true);
-                return;
-            }
-
-            try {
-                // 1. Enregistrement public dans la sous-collection
-                const registrationRef = doc(db, `artifacts/${appId}/public/data/pct_events/${eventId}/registrations`, userId);
-                
-                const registrationData = {
-                    solanaWallet: walletAddress,
-                    registeredAt: serverTimestamp(),
-                    registeredBy: userId 
-                };
-
-                await setDoc(registrationRef, registrationData);
-                
-                // 2. Mise à jour atomique du compteur sur le document parent
-                const eventDocRef = doc(db, `artifacts/${appId}/public/data/pct_events`, eventId);
-                await updateDoc(eventDocRef, {
-                    // Utiliser increment() pour mettre à jour le compteur de manière sécurisée et atomique
-                    registrationCount: increment(1) 
-                });
-
-                showMessage("Inscription confirmée ! Vous recevrez vos PCT à cette adresse après l'événement.");
-                closeModal(); // Fermer le modal
-
-            } catch (error) {
-                console.error("Error during registration:", error);
-                showMessage(`Erreur d'inscription: ${error.message}`, true);
-            }
-        }
-        window.submitRegistration = submitRegistration;
-
-
-        // --- GENERAL UI LOGIC ---
-
-        /** Gère le changement de vue (onglet) */
+        // Fonction pour changer de vue (onglets)
         function showView(viewId) {
+            // Cacher toutes les vues
             document.querySelectorAll('.view-content').forEach(view => {
                 view.classList.add('hidden');
             });
-            document.getElementById(`view-${viewId}`).classList.remove('hidden');
-
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('bg-pct-blue', 'text-white', 'shadow-lg');
-                button.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+            
+            // Désactiver tous les boutons d'onglet
+            document.querySelectorAll('.tab-button').forEach(tab => {
+                tab.classList.remove('active');
+                tab.classList.add('text-gray-700', 'bg-gray-100');
+                tab.classList.remove('text-white', 'bg-pct-blue');
             });
-
-            const activeTab = document.getElementById(`tab-${viewId}`);
-            if (activeTab) {
-                activeTab.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
-                activeTab.classList.add('bg-pct-blue', 'text-white', 'shadow-lg');
+            
+            // Afficher la vue sélectionnée
+            const targetView = document.getElementById('view-' + viewId);
+            if (targetView) {
+                targetView.classList.remove('hidden');
             }
             
-            if (window.lucide) {
-                 window.lucide.createIcons();
+            // Activer le bouton d'onglet correspondant
+            const activeTab = document.getElementById('tab-' + viewId);
+            if (activeTab) {
+                activeTab.classList.add('active');
+                activeTab.classList.remove('text-gray-700', 'bg-gray-100');
+                activeTab.classList.add('text-white', 'bg-pct-blue');
             }
         }
-        window.showView = showView; // Rendre disponible globalement
 
-        // Initialisation au chargement de la fenêtre
-        window.onload = function() {
-            initFirebase();
-            if (window.lucide) {
-                window.lucide.createIcons();
+        // Fonction pour sauvegarder un événement (démo)
+        function saveEvent(e) {
+            e.preventDefault();
+            
+            if (!publicKey) {
+                showMessage('Veuillez d\'abord connecter votre portefeuille Solana.', 'bg-yellow-600');
+                return;
             }
-            showView('home'); // Afficher la vue d'accueil par défaut
+            
+            const eventName = document.getElementById('event-name').value;
+            const eventDate = document.getElementById('event-date').value;
+            const eventTime = document.getElementById('event-time').value;
+            const eventLocation = document.getElementById('event-location').value;
+            
+            // Simuler une transaction Solana
+            showTransactionLoader('Création de l\'événement en cours...');
+            
+            // Simuler un délai de transaction
+            setTimeout(() => {
+                hideTransactionLoader();
+                showMessage(`Événement "${eventName}" créé avec succès ! Vous recevrez une notification quand il sera approuvé par la communauté.`, 'bg-green-600');
+                
+                // Réinitialiser le formulaire
+                document.getElementById('event-creation-form').reset();
+                
+                // Mettre à jour la liste des événements avec un nouvel événement
+                const eventsList = document.getElementById('events-list');
+                const eventId = 'event' + (eventsList.children.length + 1);
+                const newEventHTML = `
+                    <div class="border-l-4 border-pct-green pl-3 py-2">
+                        <h4 class="font-semibold text-gray-800">${eventName}</h4>
+                        <p class="text-xs text-gray-600">${formatDate(eventDate)} • ${eventTime}</p>
+                        <button onclick="openRegistrationModal('${eventName}', '${eventId}')" class="mt-1 text-xs px-2 py-1 bg-pct-green text-white rounded hover:bg-pct-blue transition">S'inscrire</button>
+                    </div>
+                `;
+                
+                // Ajouter en haut de la liste
+                eventsList.innerHTML = newEventHTML + eventsList.innerHTML;
+            }, 2000);
+        }
+
+        // Fonction pour formater la date
+        function formatDate(dateString) {
+            const options = { day: 'numeric', month: 'short' };
+            return new Date(dateString).toLocaleDateString('fr-FR', options);
+        }
+
+        // Fonction pour ouvrir le modal d'inscription
+        function openRegistrationModal(eventName, eventId) {
+            if (!publicKey) {
+                showMessage('Veuillez d\'abord connecter votre portefeuille Solana.', 'bg-yellow-600');
+                return;
+            }
+            
+            currentEventId = eventId;
+            document.getElementById('registration-modal').classList.remove('hidden');
+            
+            // Mettre à jour l'adresse du portefeuille dans le modal
+            const addressElement = document.getElementById('connected-wallet-address');
+            const address = publicKey.toBase58();
+            addressElement.textContent = `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+            
+            // Activer le bouton d'inscription
+            const submitBtn = document.getElementById('submit-registration-btn');
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        // Fonction pour fermer le modal
+        function closeModal() {
+            document.getElementById('registration-modal').classList.add('hidden');
+            currentEventId = null;
+        }
+
+        // Fonction pour soumettre l'inscription
+        function submitRegistration() {
+            if (!publicKey || !currentEventId) {
+                showMessage('Erreur: Portefeuille non connecté ou événement non sélectionné.', 'bg-red-600');
+                return;
+            }
+            
+            // Simuler une transaction d'inscription
+            showTransactionLoader('Inscription à l\'événement en cours...');
+            
+            // Simuler un délai de transaction
+            setTimeout(() => {
+                hideTransactionLoader();
+                const address = publicKey.toBase58();
+                showMessage(`Inscription confirmée ! Vous recevrez vos PCT après l'événement sur ${address.substring(0, 6)}...`, 'bg-green-600');
+                closeModal();
+            }, 2500);
+        }
+
+        // Fonction pour afficher le loader de transaction
+        function showTransactionLoader(message) {
+            document.getElementById('transaction-message').textContent = message || 'Veuillez confirmer la transaction dans votre portefeuille.';
+            document.getElementById('transaction-loader').classList.remove('hidden');
+        }
+
+        // Fonction pour cacher le loader de transaction
+        function hideTransactionLoader() {
+            document.getElementById('transaction-loader').classList.add('hidden');
+        }
+
+        // Fonction pour afficher un message
+        function showMessage(message, bgColor) {
+            const msgBox = document.getElementById('message-box');
+            msgBox.textContent = message;
+            msgBox.className = `fixed bottom-4 right-4 p-3 rounded-lg shadow-xl text-white transition-opacity duration-300 ${bgColor}`;
+            msgBox.classList.remove('hidden');
+            
+            // Cacher le message après 5 secondes
+            setTimeout(() => {
+                msgBox.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Fermer le modal si on clique en dehors
+        window.onclick = function(event) {
+            const modal = document.getElementById('registration-modal');
+            const loader = document.getElementById('transaction-loader');
+            if (event.target === modal) {
+                closeModal();
+            }
+            if (event.target === loader) {
+                // Ne pas fermer le loader pendant une transaction
+            }
         };
     </script>
-
 </body>
 </html>
+
